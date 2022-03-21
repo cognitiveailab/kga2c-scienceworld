@@ -42,14 +42,6 @@ class PackedEncoderRNN(nn.Module):
 
         # Can go run if action is a zero vector
         lengths = torch.tensor([torch.nonzero(n)[-1] + 1 for n in input], dtype=torch.long)#, device=device)
-        # lengths = []
-        # for n in input:
-        #     non_zero_idx = torch.nonzero(n)
-        #     if non_zero_idx.shape[0] == 0:
-        #         lengths.append(0)
-        #     else:
-        #         lengths.append(non_zero_idx[-1] + 1)
-        # lengths = torch.tensor(lengths, dtype=torch.long)
 
         packed = nn.utils.rnn.pack_padded_sequence(embedded, lengths, enforce_sorted=False)
         output, hidden = self.gru(packed, hidden)

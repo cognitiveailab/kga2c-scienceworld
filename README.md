@@ -5,13 +5,13 @@ This repository contains a reference implementation KG-A2C as mentioned in [Grap
 Clone the repository:
 ```bash
 git clone git@github.com:cognitiveailab/kga2c-scienceworld.git
-cd sciworld-kga2c
+cd kga2c-scienceworld
 ```
 
 Install Dependencies:
 ```bash
-conda create --name sciworld-kga2c python=3.7
-conda activate sciworld-kga2c
+conda create --name kga2c-scienceworld python=3.7
+conda activate kga2c-scienceworld
 pip install -r requirements.txt
 sudo apt-get install redis-server
 ```
@@ -19,8 +19,8 @@ You may want to install the pytorch manually if your GPU does not support CUDA 1
 
 Train KG-A2C
 ```bash
-mkdir logs
 cd kga2c
+mkdir logs
 ./start-redis.sh & python3 train.py --rom_file_path=virtualenv-scala-assembly-1.0.jar --task_num=0 --batch_size=8 --simplification_str=easy --stuck_steps=100 --reset_steps=100 --steps=100000 --test_interval=1000 --seed=0 --output_dir logs
 ```
 
