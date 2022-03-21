@@ -4,7 +4,7 @@ This repository contains a reference implementation KG-A2C as mentioned in [Grap
 # Quickstart
 Clone the repository:
 ```bash
-git clone git@github.com:cognitiveailab/sciworld-kga2c.git
+git clone git@github.com:cognitiveailab/kga2c-scienceworld.git
 cd sciworld-kga2c
 ```
 
