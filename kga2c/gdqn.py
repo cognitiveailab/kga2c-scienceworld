@@ -66,7 +66,6 @@ class KGA2CTrainer(object):
         self.num_tasks = len(task_names)
         self.templates = kg_env.templates
         self.template_lut = kg_env.template_lut
-        self.max_types = kg_env.max_types
         self.train_var_nos = list(kg_env.env.getVariationsTrain())
         self.dev_var_nos = list(kg_env.env.getVariationsDev())
         self.test_var_nos = list(kg_env.env.getVariationsTest())
