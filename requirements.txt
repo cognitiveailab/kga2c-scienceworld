@@ -1,0 +1,18 @@
+redis~=3.3.8
+numpy~=1.21.5
+jericho~=3.1.0
+networkx~=2.3
+spacy~=2.2.3
+Flask~=1.1.1
+tqdm~=4.32.1
+sentencepiece~=0.1.83
+requests~=2.22.0
+fuzzywuzzy~=0.17.0
+-f https://download.pytorch.org/whl/cu113/torch_stable.html
+torch==1.10.1+cu113
+tensorflow==1.14.0
+tensorboard==1.14.0
+pydot==1.4.2
+matplotlib==3.5.1
+py4j
+pyyaml
