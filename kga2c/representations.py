@@ -1,8 +1,5 @@
 import networkx as nx
 import numpy as np
-import openie
-from fuzzywuzzy import fuzz
-from jericho.util import clean
 from observation_parser import parse_inventory, parse_observation
 
 
