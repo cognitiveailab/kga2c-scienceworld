@@ -15,7 +15,7 @@ from models import KGA2C
 from env import *
 from vec_env import *
 
-from scienceworld_python_api import BufferedHistorySaver
+from scienceworld import BufferedHistorySaver
 
 device = torch.device("cuda")
 
