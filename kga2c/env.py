@@ -3,9 +3,9 @@ import numpy as np
 from representations import StateAction
 import random
 
-from scienceworld_python_api import VirtualEnv
+from scienceworld import ScienceWorldEnv
 
-import time      #PJ
+import time
 
 
 GraphInfo = collections.namedtuple('GraphInfo', 
@@ -86,7 +86,7 @@ class KGA2CEnv:
         ''' Create the ScienceWorld environment '''
 
         print("Creating environment (threadNum = " + str(thread_id) + ")")
-        self.env = VirtualEnv("", self.rom_path, envStepLimit=self.step_limit, threadNum=100+thread_id)
+        self.env = ScienceWorldEnv("", self.rom_path, envStepLimit=self.step_limit, threadNum=100+thread_id)
         time.sleep(2)
 
         taskNames = self.env.getTaskNames()  # Just get first task
@@ -95,7 +95,6 @@ class KGA2CEnv:
         self.env.load(self.taskName, var_no, self.simplification_str)
 
         self.vocab_act, self.vocab_act_rev, self.vocab_kge = load_vocab(self.env)
-        print(len(self.vocab_act))
 
         _, _ = self.env.reset()
         self.templates, self.template_lut = extract_templates(self.env.getPossibleActionsWithIDs())

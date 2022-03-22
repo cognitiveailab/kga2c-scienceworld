@@ -7,7 +7,7 @@ def parse_args():
     parser.add_argument('--output_dir', default='./logs/')
     parser.add_argument('--spm_file', default='./spm_models/unigram_8k.model')
     parser.add_argument('--tsv_file', default='../data/sciworld_entity2id.tsv')
-    parser.add_argument('--rom_file_path', default='virtualenv-scala-assembly-1.0.jar')
+    parser.add_argument('--rom_file_path')
     parser.add_argument('--batch_size', default=8, type=int)
     parser.add_argument('--lr', default=0.003, type=float)
     parser.add_argument('--gamma', default=.9, type=float)

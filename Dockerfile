@@ -36,8 +36,6 @@ EXPOSE 6379
 COPY . /KG-A2C
 RUN pip install -r /KG-A2C/requirements.txt
 
-RUN python -m spacy download en
-
 WORKDIR /
 
 ENV PYTHONPATH=/KG-A2C/kga2c

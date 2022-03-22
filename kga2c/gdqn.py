@@ -302,9 +302,9 @@ class KGA2CTrainer(object):
             objs = [g.objs for g in graph_infos]
             tmpl_gt_tt, obj_mask_gt_tt = self.generate_targets(admissible, objs)
 
-            topk_o1_probs, topk_o1_idxs = F.softmax(obj_pred_tt[0,0]).topk(5)
-            topk_o1 = [self.vocab_act[o] for o in topk_o1_idxs.tolist()]
-            o1_pred_str = ', '.join(['{} {:.3f}'.format(o, prob) for o, prob in zip(topk_o1, topk_o1_probs.tolist())])
+            # topk_o1_probs, topk_o1_idxs = F.softmax(obj_pred_tt[0,0]).topk(5)
+            # topk_o1 = [self.vocab_act[o] for o in topk_o1_idxs.tolist()]
+            # o1_pred_str = ', '.join(['{} {:.3f}'.format(o, prob) for o, prob in zip(topk_o1, topk_o1_probs.tolist())])
 
             chosen_actions = self.decode_actions(dec_tmpl_tt, dec_obj_tt, type_to_obj_str_luts)
 
