@@ -21,11 +21,10 @@ Train KG-A2C
 ```bash
 cd kga2c
 mkdir logs
-./start-redis.sh & python3 train.py --rom_file_path=virtualenv-scala-assembly-1.0.jar --task_num=0 --batch_size=8 --simplification_str=easy --stuck_steps=100 --reset_steps=100 --steps=100000 --test_interval=1000 --seed=0 --output_dir logs
+./start-redis.sh & python3 train.py --task_num=0 --batch_size=8 --simplification_str=easy --stuck_steps=100 --reset_steps=100 --steps=100000 --test_interval=1000 --seed=0 --output_dir logs
 ```
 
 Here:
-- **rom_file_path:** The path to the ScienceWorld api jar file
 - **task_num:** The ScienceWorld task index (0-29). *See **task list** below*
 - **batch_size:** The number of environment threads to simultaneously use during training (8 is a common number)
 - **simplification_str:** The ScienceWorld simplification string
