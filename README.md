@@ -30,7 +30,7 @@ Here:
 - **simplification_str:** The ScienceWorld simplification string
 - **stuck_steps:** If the agent continuously generates stuck_steps number of invalid actions, the environment will reset
 - **reset_steps:** the maximum steps per episode 
-- **steps:** the maximum number of steps to run an environment for, before it times out and resets (100 typical)
+- **steps:** the maximum number of steps
 - **test_interval:** the number of steps between evaluations
 - **seed:** random seed
 - **output_dir:** output directory
