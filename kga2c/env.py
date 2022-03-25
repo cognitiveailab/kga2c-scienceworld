@@ -74,8 +74,6 @@ class KGA2CEnv:
         self.max_stuck_steps = stuck_steps
         self.gat             = gat
         self.env             = None
-        self.conn_valid      = None
-        self.conn_openie     = None
         self.state_rep       = None
         self.taskName        = None
         self.max_word_len = max_word_len

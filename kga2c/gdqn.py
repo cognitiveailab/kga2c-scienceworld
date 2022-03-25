@@ -279,7 +279,7 @@ class KGA2CTrainer(object):
             var_num = self.dev_var_nos
         else:
             var_num = self.test_var_nos
-        self.dev_vec_env = VecEnv(self.params['batch_size'], self.kg_env, self.params['task_num'],self.params['output_dir'], threadIdOffset=100, is_train=False)
+        self.dev_vec_env = VecEnv(self.params['batch_size'], self.kg_env, self.params['task_num'],self.params['output_dir'], threadIdOffset=100)
         obs, infos, graph_infos = self.dev_vec_env.reset(var_num)
         episode = 0
         while True:

@@ -1,17 +1,9 @@
 import random
 
-import redis
 import time
-import subprocess
 from multiprocessing import Process, Pipe
 
-def start_redis():
-    print('Starting Redis')
-    subprocess.Popen(['redis-server', '--save', '\"\"', '--appendonly', 'no'])
-    time.sleep(1)
-
-
-def worker(remote, parent_remote, env, id, task_num, save_dir, is_train=True):
+def worker(remote, parent_remote, env, id, task_num):
     parent_remote.close()
     curr_var_no = 0
     env.create(id, task_num, curr_var_no)
@@ -49,14 +41,13 @@ def worker(remote, parent_remote, env, id, task_num, save_dir, is_train=True):
 
 
 class VecEnv:
-    def __init__(self, num_envs, env, task_num, save_dir, threadIdOffset=0, is_train=True):
-        self.conn_valid = redis.Redis(host='localhost', port=6379, db=0)
+    def __init__(self, num_envs, env, task_num, threadIdOffset=0):
         self.closed = False
         self.total_steps = 0
         self.num_envs = num_envs
         self.remotes, self.work_remotes = zip(*[Pipe() for _ in range(num_envs)])
         self.ids = [i+threadIdOffset for i in range(self.num_envs)]
-        self.ps = [Process(target=worker, args=(work_remote, remote, env, ids, task_num, save_dir, is_train))
+        self.ps = [Process(target=worker, args=(work_remote, remote, env, ids, task_num))
                    for (work_remote, remote, ids) in zip(self.work_remotes, self.remotes, self.ids)]
         for p in self.ps:
             p.daemon = True  # if the main process crashes, we should not cause things to hang
@@ -66,8 +57,6 @@ class VecEnv:
             remote.close()
 
     def step(self, actions, var_nums):
-        if self.total_steps % 1024 == 0:
-            self.conn_valid.flushdb()
         self.total_steps += 1
         self._assert_not_closed()
         assert len(actions) == self.num_envs, "Error: incorrect number of actions."
