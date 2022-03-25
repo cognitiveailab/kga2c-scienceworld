@@ -53,7 +53,7 @@ class KGA2CTrainer(object):
         self.loss_fn3 = nn.MSELoss()
         self.train_score_record = []
         self.dev_score_record = []
-        
+
 
     def init_envs(self, curr_task_no):
         params = self.params
@@ -108,7 +108,7 @@ class KGA2CTrainer(object):
             type_targets.append(list(type_t))
         tmpl_target_tt = torch.FloatTensor(tmpl_target).cuda()
 
-        
+
         idxs = np.array([i for i in range(len(self.vocab_act))])
         # Note: Adjusted to use the objects in the admissible actions only
         type_mask_target = []
@@ -129,7 +129,7 @@ class KGA2CTrainer(object):
         mask_all = []
         for graph_info in graph_infos:
             mask = [0] * (len(self.vocab_act))
-            
+
             if self.params['masking'] == 'kg':
                 # Uses the knowledge graph as the mask.
                 graph_state = graph_info.graph_state
@@ -189,23 +189,23 @@ class KGA2CTrainer(object):
             scores = [info['score'] for info in infos]
             tmpl_pred_tt, obj_pred_tt, dec_obj_tt, dec_tmpl_tt, value, dec_steps = self.model(
                 obs_reps, scores, graph_state_reps, graph_mask_tt,type_to_obj_str_luts)
-            
+
             # Log the predictions and ground truth values
             topk_tmpl_probs, topk_tmpl_idxs = F.softmax(tmpl_pred_tt[0]).topk(5)
             topk_tmpls = [self.templates[t] for t in topk_tmpl_idxs.tolist()]
             tmpl_pred_str = ', '.join(['{} {:.3f}'.format(tmpl, prob) for tmpl, prob in zip(topk_tmpls, topk_tmpl_probs.tolist())])
-            
+
             # Generate the ground truth and object mask
             admissible = [g.admissible_actions for g in graph_infos]
             objs = [g.objs for g in graph_infos]
             tmpl_gt_tt, obj_mask_gt_tt = self.generate_targets(admissible, objs)
-            
+
 
             chosen_actions = self.decode_actions(dec_tmpl_tt, dec_obj_tt, type_to_obj_str_luts)
 
             observations, rewards, dones, infos, graph_infos = self.train_vec_env.step(chosen_actions, self.train_var_nos)
             for n in range(len(graph_infos)):
-                
+
                 print('Environment {}, Step {}, Act: {}, Rew {}, Score {}, Done {}, Value {:.3f}'.format(
                     n, step, chosen_actions[n], rewards[n], infos[n]['score'], dones[n], value[n].item()))
                 if dones[n]:
@@ -223,15 +223,15 @@ class KGA2CTrainer(object):
                     self.bufferedHistorySaverTrain.storeRunHistory(run_history, episode, notes={'last_10_score': last_10_score, 'step': step})
                     self.bufferedHistorySaverTrain.saveRunHistoriesBufferIfFull(maxPerFile=self.params['max_histories_per_file'])
                     episode += 1
-                    
+
                     print(score_count)
                     print(f"Last 10% episodes average score: {last_10_score}")
 
-                    
+
             rew_tt = torch.FloatTensor(rewards).cuda().unsqueeze(1)
             done_mask_tt = (~torch.tensor(dones)).float().cuda().unsqueeze(1)
             self.model.reset_hidden(done_mask_tt)
-            
+
             transitions.append((tmpl_pred_tt, obj_pred_tt, value, rew_tt,
                                 done_mask_tt, tmpl_gt_tt, dec_tmpl_tt,
                                 dec_obj_tt, obj_mask_gt_tt, graph_mask_tt, dec_steps))
@@ -260,12 +260,12 @@ class KGA2CTrainer(object):
 
 
                 observations, infos, graph_infos = self.train_vec_env.reset(self.train_var_nos)
-                
+
         with open(os.path.join(self.output_dir, 'train_scores.pkl'), 'wb') as f:
             pickle.dump(self.train_score_record, f)
         with open(os.path.join(self.output_dir, 'dev_scores.pkl'), 'wb') as f:
             pickle.dump(self.dev_score_record, f)
-        
+
         self.bufferedHistorySaverTrain.saveRunHistoriesBufferIfFull(maxPerFile=self.params['max_histories_per_file'], forceSave=True)
         self.bufferedHistorySaverEval.saveRunHistoriesBufferIfFull(maxPerFile=self.params['max_histories_per_file'], forceSave=True)
         self.train_vec_env.close_extras()
@@ -310,7 +310,7 @@ class KGA2CTrainer(object):
 
             obs, rewards, dones, infos, graph_infos = self.dev_vec_env.step(chosen_actions, var_num)
             for n in range(len(graph_infos)):
-                
+
                 print('Environment {}, Act: {}, Rew {}, Score {}, Done {}, Value {:.3f}'.format(
                     n, chosen_actions[n], rewards[n], infos[n]['score'], dones[n], value[n].item()))
                 if dones[n]:
@@ -328,7 +328,7 @@ class KGA2CTrainer(object):
                     run_history = infos[n]['history']
                     self.bufferedHistorySaverEval.storeRunHistory(run_history, f"{global_steps}-{episode}", notes={'last_10_score':last_10_score})
                     self.bufferedHistorySaverEval.saveRunHistoriesBufferIfFull(maxPerFile=self.params['max_histories_per_file'])
-                    
+
                     print(score_count)
                     print(f"Last 10% episodes average score: {last_10_score}")
 
@@ -336,8 +336,8 @@ class KGA2CTrainer(object):
                     if episode >= max_episodes:
                         print(f"##### {mode.upper()} ENDS #####")
                         self.dev_vec_env.close_extras()
-                        return                       
-                    
+                        return
+
 
             rew_tt = torch.FloatTensor(rewards).cuda().unsqueeze(1)
             done_mask_tt = (~torch.tensor(dones)).float().cuda().unsqueeze(1)
@@ -437,7 +437,7 @@ class KGA2CTrainer(object):
             grad_norm = grad_norm + p.grad.data.norm(2).item()
 
         self.optimizer.step()
-        
+
         return loss
 
 

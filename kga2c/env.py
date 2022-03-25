@@ -8,7 +8,7 @@ from scienceworld import ScienceWorldEnv
 import time
 
 
-GraphInfo = collections.namedtuple('GraphInfo', 
+GraphInfo = collections.namedtuple('GraphInfo',
                                     'objs, ob_rep, act_rep, graph_state, graph_state_rep, admissible_actions, admissible_actions_rep, referents_to_type_id_lut,type_to_obj_str_lut')
 
 def load_vocab(env):
@@ -18,8 +18,8 @@ def load_vocab(env):
     actions = env.getPossibleActions()
     vocab_act = vocab_kge.copy()
     vocab_act_rev = {v: k for k, v in vocab_act.items()}
-    
-    idx = len(vocab_kge)    
+
+    idx = len(vocab_kge)
 
     for action in actions:
         for word in action.split():
@@ -31,7 +31,7 @@ def load_vocab(env):
     vocab_act[idx] = ' '
     vocab_act[idx+1] = '<s>'
     vocab_act_rev[' '] = idx
-    vocab_act_rev['<s>'] = idx + 1    
+    vocab_act_rev['<s>'] = idx + 1
 
     return vocab_act, vocab_act_rev, vocab_kge
 
@@ -54,6 +54,7 @@ def extract_templates(template_id_list):
     for i in range(NUM_OPTION):
         template_lut[OPTION_BASE + i] = len(template_id_list) + i
     return ret, template_lut
+
 
 class KGA2CEnv:
     '''
@@ -78,8 +79,8 @@ class KGA2CEnv:
         self.taskName        = None
         self.max_word_len = max_word_len
         self.simplification_str = simplification_str
-        
-        
+
+
     def create(self, thread_id, task_num, var_no):
         ''' Create the ScienceWorld environment '''
 
@@ -171,7 +172,7 @@ class KGA2CEnv:
         graph_state_rep = self.state_rep.graph_state_rep
         action_rep = self.state_rep.get_action_rep_drqa(action)
 
-        
+
 
         return GraphInfo(objs, ob_rep, action_rep, graph_state, graph_state_rep,\
                          admissible_actions, admissible_actions_rep,\
@@ -182,7 +183,7 @@ class KGA2CEnv:
         obs, reward, done, info = self.env.step(action)
         obs_look = info['look']
         obs_inventory = info['inv']
-        info['valid'] = done 
+        info['valid'] = done
         info['steps'] = info['moves']
         if info['valid']:
             self.valid_steps += 1
@@ -207,7 +208,7 @@ class KGA2CEnv:
                                      self.vocab_kge, self.max_word_len)
         self.stuck_steps = 0
         self.valid_steps = 0
-        self.episode_steps = 0        
+        self.episode_steps = 0
         obs, info = self.env.reset()
         obs_look = info['look']
         obs_inventory = info['inv']
@@ -218,15 +219,15 @@ class KGA2CEnv:
         return [obs, obs_look, obs_inventory], info, graph_info
 
     def resetWithVariation(self, var_no):
-        assert(self.taskName is not None) 
+        assert(self.taskName is not None)
         self.env.load(self.taskName, var_no, self.simplification_str)
         return self.reset()
 
     def getRandomVariationTrain(self):
-        return self.env.getRandomVariationTrain()    
+        return self.env.getRandomVariationTrain()
 
     def getRandomVariationDev(self):
-        return self.env.getRandomVariationDev()    
+        return self.env.getRandomVariationDev()
 
     def getRandomVariationTest(self):
         return self.env.getRandomVariationTest()

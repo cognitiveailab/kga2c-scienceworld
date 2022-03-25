@@ -1,7 +1,7 @@
-import random
-
 import time
+import random
 from multiprocessing import Process, Pipe
+
 
 def worker(remote, parent_remote, env, id, task_num):
     parent_remote.close()
@@ -12,13 +12,13 @@ def worker(remote, parent_remote, env, id, task_num):
         while True:
             cmd, data, var_nums = remote.recv()
             if cmd == 'step':
-                if done:                   
+                if done:
                     # Samples random task variation from list of vars in current pool
                     curr_var_no = random.sample(var_nums, 1)[0]
                     ob, info, graph_info = env.resetWithVariation(curr_var_no)
                     rew = 0
                     done = False
-                    
+
                 else:
                     ob, rew, done, info, graph_info = env.step(data)
                 remote.send((ob, rew, done, info, graph_info))
@@ -29,7 +29,7 @@ def worker(remote, parent_remote, env, id, task_num):
 
                 ob, info, graph_info = env.reset()
                 remote.send((ob, info, graph_info))
-            elif cmd == 'close':                
+            elif cmd == 'close':
                 env.close()
                 break
             else:
