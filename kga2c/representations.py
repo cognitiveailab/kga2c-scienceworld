@@ -1,5 +1,6 @@
-import networkx as nx
 import numpy as np
+import networkx as nx
+
 from observation_parser import parse_inventory, parse_observation
 
 
@@ -56,7 +57,7 @@ class StateAction(object):
             v = rule[2]
 
             if u in referent_to_type_lut and v in referent_to_type_lut:
-                
+
                 self.graph_state.add_edge(self.vocab_kge[referent_to_type_lut[u]], self.vocab_kge[referent_to_type_lut[v]], rel=rule[1])
 
 
@@ -118,7 +119,7 @@ class StateAction(object):
         action = str(action)
 
         for i, token in enumerate(action.split()[:20]):
-            short_tok = token[:self.max_word_len]            
+            short_tok = token[:self.max_word_len]
             action_desc_num[i] = self.vocab_act_rev[short_tok] if short_tok in self.vocab_act_rev else 0
 
         return action_desc_num

@@ -1,6 +1,7 @@
-import os
-from gdqn import KGA2CTrainer
 import argparse
+
+from gdqn import KGA2CTrainer
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
