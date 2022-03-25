@@ -73,7 +73,7 @@ TASK LIST:
 
 If this KG-A2C agent is helpful in your work, please cite the following:
 
-```Bibtex
+```
 @misc{scienceworld2022,
     title={ScienceWorld: Is your Agent Smarter than a 5th Grader?},
     author={Ruoyao Wang and Peter Jansen and Marc-Alexandre C{\^o}t{\'e} and Prithviraj Ammanabrolu},
