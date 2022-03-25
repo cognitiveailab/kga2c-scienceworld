@@ -1,16 +1,14 @@
-from dataclasses import dataclass
-from distutils.command.build_scripts import first_line_re
 import re
 
 ######
-# input_str = '''This room is called the green house. In it, you see: 
+# input_str = '''This room is called the green house. In it, you see:
 # 	a shovel
 # 	the agent
 # 	a substance called air
 # 	a blue box (containing nothing)
 # 	a jug (containing nothing)
 # 	a sink, which is turned off. In the sink is: nothing.
-# 	a bee hive. The bee hive door is closed. 
+# 	a bee hive. The bee hive door is closed.
 # You also see:
 # 	A door to the hallway (that is closed)
 # 	A door to the outside (that is open)
@@ -29,7 +27,7 @@ def parse_observation(obs):
         _, line_rules = parse_object_line(lines[idx], room, 'contains')
         rules.extend(line_rules)
         idx +=1
-    
+
     for line in lines[idx+1: ]:
         door_match = re.match(r"A door to the (.*) \(that is (.*)\)", line.strip())
         if door_match is None:
@@ -66,14 +64,14 @@ def parse_object_with_property(obj_pro, subject, relation):
         match = re.match(template, obj_pro)
         if match is not None:
             obj = parse_object(match.group(1))
-            
+
             if n == 0:
                 rel = 'is'
             elif n == 1:
                 rel = 'contains'
             else:
                 rel = 'reads'
-            
+
             targets = match.group(2)
             rules.append((subject, relation, obj))
 

@@ -1,11 +1,11 @@
+import time
+import random
 import collections
 import numpy as np
-from representations import StateAction
-import random
 
 from scienceworld import ScienceWorldEnv
 
-import time
+from representations import StateAction
 
 
 GraphInfo = collections.namedtuple('GraphInfo',

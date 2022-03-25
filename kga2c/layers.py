@@ -4,8 +4,6 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 import numpy as np
 
-import networkx as nx
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class EncoderRNN(nn.Module):
