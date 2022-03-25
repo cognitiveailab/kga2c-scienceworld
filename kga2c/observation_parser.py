@@ -1,10 +1,7 @@
 import re
 
 ######
-<<<<<<< HEAD
 # # Input string example
-=======
->>>>>>> 8b41f9906605e6112d47d8c9a6b34ef0c83ca5c7
 # input_str = '''This room is called the green house. In it, you see:
 # 	a shovel
 # 	the agent
