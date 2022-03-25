@@ -82,7 +82,7 @@ class KGA2CTrainer(object):
         self.vocab_kge = kg_env.vocab_kge
         self.max_word_length = kg_env.max_word_len
 
-        self.train_vec_env = VecEnv(params['batch_size'], kg_env, params['task_num'], self.params['output_dir'], threadIdOffset=0)
+        self.train_vec_env = VecEnv(params['batch_size'], kg_env, params['task_num'], threadIdOffset=0)
         self.dev_vec_env = None
 
     def generate_targets(self, admissible, objs):
@@ -279,7 +279,7 @@ class KGA2CTrainer(object):
             var_num = self.dev_var_nos
         else:
             var_num = self.test_var_nos
-        self.dev_vec_env = VecEnv(self.params['batch_size'], self.kg_env, self.params['task_num'],self.params['output_dir'], threadIdOffset=100)
+        self.dev_vec_env = VecEnv(self.params['batch_size'], self.kg_env, self.params['task_num'], threadIdOffset=100)
         obs, infos, graph_infos = self.dev_vec_env.reset(var_num)
         episode = 0
         while True:
