@@ -1,7 +1,7 @@
 # KG-A2C
 This repository contains a reference implementation KG-A2C as mentioned in [Graph Constrained Reinforcement Learning for Natural Language Action Spaces](https://openreview.net/forum?id=B1x6w0EtwH), that has been modified for use with the [ScienceWorld](https://www.github.com/allenai/ScienceWorld) environment.
 
-# Quickstart
+## Quickstart
 Clone the repository:
 ```bash
 git clone git@github.com:cognitiveailab/kga2c-scienceworld.git
