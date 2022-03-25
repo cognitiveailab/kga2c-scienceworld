@@ -26,7 +26,7 @@ EXPOSE 25300-25600
 USER root:root
 WORKDIR /opt
 RUN apt-get update \
-   &&  apt-get install -y --no-install-recommends redis-server default-jre
+   &&  apt-get install -y --no-install-recommends default-jre
 RUN apt-get install -y --no-install-recommends unzip
 EXPOSE 5002-5100
 EXPOSE 5002 5003 5004 5005 5006 5007 5008 5009 5010 5011 5012 5013 5014 5015 5016 5017 5018
