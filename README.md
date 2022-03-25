@@ -13,7 +13,6 @@ Install Dependencies:
 conda create --name kga2c-scienceworld python=3.7
 conda activate kga2c-scienceworld
 pip install -r requirements.txt
-sudo apt-get install redis-server
 ```
 You may want to install the pytorch manually if your GPU does not support CUDA 11.
 
@@ -21,7 +20,7 @@ Train KG-A2C
 ```bash
 cd kga2c
 mkdir logs
-./start-redis.sh & python3 train.py --task_num=0 --batch_size=8 --simplification_str=easy --stuck_steps=100 --reset_steps=100 --steps=100000 --test_interval=1000 --seed=0 --output_dir logs
+python train.py --task_num=0 --batch_size=8 --simplification_str=easy --stuck_steps=100 --reset_steps=100 --steps=100000 --test_interval=1000 --seed=0 --output_dir logs
 ```
 
 Here:
@@ -29,7 +28,7 @@ Here:
 - **batch_size:** The number of environment threads to simultaneously use during training (8 is a common number)
 - **simplification_str:** The ScienceWorld simplification string
 - **stuck_steps:** If the agent continuously generates stuck_steps number of invalid actions, the environment will reset
-- **reset_steps:** the maximum steps per episode 
+- **reset_steps:** the maximum steps per episode
 - **steps:** the maximum number of steps
 - **test_interval:** the number of steps between evaluations
 - **seed:** random seed
@@ -37,7 +36,7 @@ Here:
 
 ## ScienceWorld Task List
 ```
-TASK LIST: 
+TASK LIST:
     0: 	                                                 task-1-boil  (30 variations)
     1: 	                        task-1-change-the-state-of-matter-of  (30 variations)
     2: 	                                               task-1-freeze  (30 variations)
@@ -76,12 +75,21 @@ If this KG-A2C agent is helpful in your work, please cite the following:
 
 Bibtex
 ```
+@misc{scienceworld2022,
+    title={ScienceWorld: Is your Agent Smarter than a 5th Grader?},
+    author={Ruoyao Wang and Peter Jansen and Marc-Alexandre C{\^o}t{\'e} and Prithviraj Ammanabrolu},
+    year={2022},
+    eprint={2203.07540},
+    archivePrefix={arXiv},
+    primaryClass={cs.CL},
+    url={https://arxiv.org/abs/2203.07540}
+
 @inproceedings{
-ammanabrolu2020graph,
-title={Graph Constrained Reinforcement Learning for Natural Language Action Spaces},
-author={Prithviraj Ammanabrolu and Matthew Hausknecht},
-booktitle={International Conference on Learning Representations},
-year={2020},
-url={https://openreview.net/forum?id=B1x6w0EtwH}
+    ammanabrolu2020graph,
+    title={Graph Constrained Reinforcement Learning for Natural Language Action Spaces},
+    author={Prithviraj Ammanabrolu and Matthew Hausknecht},
+    booktitle={International Conference on Learning Representations},
+    year={2020},
+    url={https://openreview.net/forum?id=B1x6w0EtwH}
 }
 ```
