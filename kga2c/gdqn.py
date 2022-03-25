@@ -10,17 +10,14 @@ import sentencepiece as spm
 from statistics import mean
 import random
 
-from representations import StateAction
-from models import KGA2C
-from env import *
-from vec_env import *
-
 from scienceworld import BufferedHistorySaver
 
+from models import KGA2C
+from env import KGA2CEnv
+from vec_env import VecEnv
+
+
 device = torch.device("cuda")
-
-
-
 
 
 class KGA2CTrainer(object):

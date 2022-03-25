@@ -2,8 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
-from layers import *
+from layers import DecoderRNN, DecoderRNN2, EncoderLSTM, GraphAttentionLayer, PackedEncoderRNN
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -130,7 +129,7 @@ class KGA2C(nn.Module):
     def forward(self, obs, scores, graph_rep, graphs, type_to_obj_str_luts):
         '''
         :param obs: The encoded ids for the textual observations (shape 4x300):
-        The 4 components of an observation are: look - ob_l, inventory - ob_i, response - ob_r, and prev_action. 
+        The 4 components of an observation are: look - ob_l, inventory - ob_i, response - ob_r, and prev_action.
         :type obs: ndarray
 
         '''
@@ -151,10 +150,10 @@ class KGA2C(nn.Module):
         src_t = torch.FloatTensor(src_t).cuda()
 
         if not self.gat:
-            state_emb = torch.cat((o_t, src_t), dim=1) 
+            state_emb = torch.cat((o_t, src_t), dim=1)
         else:
             g_t = self.state_gat.forward(graph_rep)
-            state_emb = torch.cat((g_t, o_t, src_t), dim=1)    
+            state_emb = torch.cat((g_t, o_t, src_t), dim=1)
         state_emb = F.relu(self.state_fc(state_emb))
         det_state_emb = state_emb.clone()#.detach()
         value = self.critic(det_state_emb)
