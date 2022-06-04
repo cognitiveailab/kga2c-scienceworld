@@ -5,4 +5,4 @@ sentencepiece~=0.1.83
 torch==1.10.1+cu113
 pydot==1.4.2
 matplotlib
-scienceworld
+scienceworld==1.0.0
